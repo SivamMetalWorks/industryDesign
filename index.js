@@ -1,12 +1,13 @@
-let express=require('express')
-let path=require('path')
-let app=express()
-let logger=require('morgan')
-app.set('views',path.join(__dirname,'views'))
-app.set('view engine','ejs')
-app.use(express.static(path.join(__dirname,'public')))
-app.use(express.static(path.join(__dirname,'css')))
-app.use('/',require('./router/index'))
-app.use(logger('dev'))
+const config=require('./config/localhost')
+Object.keys(config).forEach(key=>{
+    process.env[key]=config[key]
+})
 
-module.exports=app
+let http=require('http')
+let port=process.env.port || 3001
+let app=require('./app')
+let server=http.createServer(app)
+server.listen(port,()=>{
+    console.log('http://localhost:'+port)
+})
+app.set('port',port)
