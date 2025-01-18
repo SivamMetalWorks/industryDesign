@@ -5,7 +5,7 @@ Object.keys(config).forEach(key=>{
 
 let http=require('http')
 let port=process.env.port || 3001
-let app=require('../app')
+let app=require('../index')
 let server=http.createServer(app)
 server.listen(port,()=>{
     console.log('http://localhost:'+port)
